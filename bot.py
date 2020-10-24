@@ -1,4 +1,5 @@
 import asyncio
+import json
 import discord
 import time
 import filecmp
@@ -20,19 +21,23 @@ async def on_ready():
 
 @tasks.loop(seconds=60)
 async def check():
-    url = 'https://mangadex.org/title/17274/kaguya-sama-wa-kokurasetai-tensai-tachi-no-renai-zunousen'
-    headers = {'User-Agent':'Mozilla/5.0'}
-    r = requests.get(url, headers)
-    soup = BeautifulSoup(r.content, "html.parser")
-    with open("current", "w") as c:
-        newest = soup.find("div", {"data-lang":"1"})
-        print(newest['data-chapter'])
-    if not filecmp.cmp('current', 'past'):
-        with open("current") as c:
-            await client.channel.send("new chapter! read it here: " + c.readline())
-        shutil.move('current', 'past')
-    print("checked at")
-    print(datetime.now().time())
+    with open("data.json") as f:
+        data = json.load(f)
+    for id in data["manga"]:
+        url = 'https://mangadex.org/title/' + id
+        headers = {'User-Agent':'Mozilla/5.0'}
+        r = requests.get(url, headers)
+        soup = BeautifulSoup(r.content, "html.parser")
+
+        with open("current", "w") as c:
+            newest = soup.find("div", {"data-lang":"1"})
+            ch = newest['data-chapter']
+            if ch != data["manga"][id]:
+                data["manga"][id] = ch
+                data["new"].append(id)
+
+    with open("data.json", "w") as f:
+        json.dump(data, f, indent=4)
 
 @client.command()
 async def ok(ctx):
