@@ -3,7 +3,7 @@ import discord
 import time
 import filecmp
 import shutil
-import urllib.request, urllib.error, urllib.parse
+import requests
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -20,12 +20,13 @@ async def on_ready():
 
 @tasks.loop(seconds=60)
 async def check():
-    url = 'https://manganelo.com/manga/kaguyasama_wa_kokurasetai_tensaitachi_no_renai_zunousen'
-    r = urllib.request.Request(url, data = None, headers = {'User-Agent': 'Mozilla/5.0'})
-    soup = BeautifulSoup(urllib.request.urlopen(r).read().decode('utf-8'), "html.parser")
+    url = 'https://mangadex.org/title/17274/kaguya-sama-wa-kokurasetai-tensai-tachi-no-renai-zunousen'
+    headers = {'User-Agent':'Mozilla/5.0'}
+    r = requests.get(url, headers)
+    soup = BeautifulSoup(r.content, "html.parser")
     with open("current", "w") as c:
-        for li in soup.find_all("li"):
-            c.write(li.find("a").get('href') + "\n")
+        newest = soup.find("div", {"data-lang":"1"})
+        print(newest['data-chapter'])
     if not filecmp.cmp('current', 'past'):
         with open("current") as c:
             await client.channel.send("new chapter! read it here: " + c.readline())
