@@ -14,7 +14,7 @@ async def on_ready():
     print('ready')
     await client.change_presence(activity = discord.Activity(name = "for new chapters", type = discord.ActivityType.watching))
     client.guild = client.get_guild(697997529312133220)
-    client.channel = client.guild.get_channel(697997529312133223)
+    client.channel = client.guild.get_channel(746421597014982796)
     check_manga.start()
     check_anime.start()
 
