@@ -15,6 +15,7 @@ async def on_ready():
     await client.change_presence(activity = discord.Activity(name = "for new chapters", type = discord.ActivityType.watching))
     client.guild = client.get_guild(697997529312133220)
     client.channel = client.guild.get_channel(697997529312133223)
+    # client.channel.send()
     check.start()
 
 @tasks.loop(seconds=60)
@@ -30,8 +31,11 @@ async def check():
         with open("current", "w") as c:
             newest = soup.find("div", {"data-lang":"1"})
             ch = newest['data-chapter']
-            if ch != data["manga"][id]:
-                data["manga"][id] = ch
+            if ch != data["manga"][id]["ch"]:
+                data["manga"][id]["ch"] = ch
+                data["manga"][id]["title"] = newest['data-title']
+                data["manga"][id]["url"] = newest['data-id']
+                data["manga"][id]["title"] = soup.find("span", {"class":"mx-1"}).text
                 data["new"].append(id)
 
     with open("data.json", "w") as f:
@@ -47,7 +51,13 @@ async def notify():
     for guild in data["guilds"]:
         for manga in data["guilds"][guild]["mangalist"]:
             if manga in data["new"]:
-                await client.get_channel(data["guilds"][guild]["channels"][0]).send(manga)
+                title = data["manga"][manga]["title"]
+                ch = data["manga"][manga]["ch"]
+                chtitle = data["manga"][manga]["chtitle"]
+                url = data["manga"][manga]["url"]
+                embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/title/{url}", color=0xfaa61a)
+                embed.set_author(name=f"{title}", icon_url="https://cdn.discordapp.com/embed/avatars/3.png")
+                await client.get_channel(data["guilds"][guild]["channels"][0]).send(embed=embed)
 
     print("notified")
     await clear()

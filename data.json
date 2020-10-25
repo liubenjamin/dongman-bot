@@ -1,7 +1,17 @@
 {
     "manga": {
-        "17274": "205",
-        "429": "133"
+        "17274": {
+            "title": "Kaguya Wants to be Confessed To",
+            "ch": "205",
+            "chtitle": "Chika Fujiwara Wants to Make Him Laugh",
+            "url": "1075863"
+        },
+        "429": {
+            "title": "Shingeki no Kyojin",
+            "ch": "133",
+            "chtitle": "Sinner",
+            "url": "1059640"
+        }
     },
     "new": [],
     "guilds": {
