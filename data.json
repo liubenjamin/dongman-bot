@@ -4,33 +4,48 @@
             "title": "Kaguya Wants to be Confessed To",
             "ch": "205",
             "chtitle": "Chika Fujiwara Wants to Make Him Laugh",
-            "url": "1075863"
+            "url": "1075863",
+            "image": "https://mangadex.org/images/manga/17274.jpg?1593681140"
         },
         "429": {
             "title": "Shingeki no Kyojin",
             "ch": "133",
             "chtitle": "Sinner",
-            "url": "1059640"
+            "url": "1059640",
+            "image": "https://mangadex.org/images/manga/429.jpg?1596836691"
         }
     },
-    "new": [],
+    "anime": {
+        "black-clover": {
+            "ep": "148",
+            "title": "Black Clover",
+            "image": "/image/Black-Clover-Cover-1.jpg"
+        }
+    },
+    "new_manga": [],
+    "new_anime": [],
     "guilds": {
         "697997529312133220": {
             "channels": [
                 697997529312133223
             ],
-            "mangalist": [
+            "manga_list": [
                 "429"
-            ]
+            ],
+            "anime_list": []
         },
         "311020162696478721": {
             "channels": [
                 769714615226990602
             ],
-            "mangalist": [
+            "manga_list": [
                 "429",
                 "17274"
+            ],
+            "anime_list": [
+                "black-clover"
             ]
         }
-    }
+    },
+    "new": []
 }
