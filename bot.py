@@ -27,6 +27,7 @@ async def check():
         headers = {'User-Agent':'Mozilla/5.0'}
         r = requests.get(url, headers)
         soup = BeautifulSoup(r.content, "html.parser")
+        # print(soup.select_one("a[href*=myanimelist]").get("href"))
 
         with open("current", "w") as c:
             newest = soup.find("div", {"data-lang":"1"})
@@ -36,6 +37,8 @@ async def check():
                 data["manga"][id]["title"] = newest['data-title']
                 data["manga"][id]["url"] = newest['data-id']
                 data["manga"][id]["title"] = soup.find("span", {"class":"mx-1"}).text
+                data["manga"][id]["image"] = soup.find("img", {"class":"rounded"})['src']
+
                 data["new"].append(id)
 
     with open("data.json", "w") as f:
@@ -55,8 +58,10 @@ async def notify():
                 ch = data["manga"][manga]["ch"]
                 chtitle = data["manga"][manga]["chtitle"]
                 url = data["manga"][manga]["url"]
-                embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/title/{url}", color=0xfaa61a)
+                image = data["manga"][manga]["image"]
+                embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/chapter/{url}", color=0xfaa61a)
                 embed.set_author(name=f"{title}", icon_url="https://cdn.discordapp.com/embed/avatars/3.png")
+                embed.set_image(url=f"{image}")
                 await client.get_channel(data["guilds"][guild]["channels"][0]).send(embed=embed)
 
     print("notified")
