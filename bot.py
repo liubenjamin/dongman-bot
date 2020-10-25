@@ -14,7 +14,7 @@ async def on_ready():
     print('ready')
     await client.change_presence(activity = discord.Activity(name = "for new chapters", type = discord.ActivityType.watching))
     client.guild = client.get_guild(697997529312133220)
-    client.channel = client.guild.get_channel(746421597014982796)
+    client.channel = client.guild.get_channel(697997529312133223)
     check_manga.start()
     check_anime.start()
 
@@ -69,7 +69,7 @@ async def clear_manga():
     data["new_manga"] = []
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
-    print("cleared")
+    print("cleared manga")
 
 @tasks.loop(seconds=600)
 async def check_anime():
@@ -111,7 +111,6 @@ async def notify_anime():
     await clear_anime()
 
 async def clear_anime():
-    time.sleep(10)
     with open("data.json") as f:
         data = json.load(f)
     data["new_anime"] = []
