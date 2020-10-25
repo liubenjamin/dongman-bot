@@ -13,6 +13,27 @@
             "chtitle": "Sinner",
             "url": "1059640",
             "image": "https://mangadex.org/images/manga/429.jpg?1596836691"
+        },
+        "39": {
+            "title": "One Piece",
+            "ch": "992",
+            "chtitle": "",
+            "url": "1069011",
+            "image": "https://mangadex.org/images/manga/39.jpg?1601473810"
+        },
+        "15016": {
+            "title": "Black Clover",
+            "ch": "268",
+            "chtitle": "",
+            "url": "1068999",
+            "image": "https://mangadex.org/images/manga/15016.jpg?1601344779"
+        },
+        "20882": {
+            "title": "Dr. Stone",
+            "ch": "170",
+            "chtitle": "",
+            "url": "1069003",
+            "image": "https://mangadex.org/images/manga/20882.jpg?1599253950"
         }
     },
     "anime": {
@@ -20,6 +41,11 @@
             "ep": "148",
             "title": "Black Clover",
             "image": "/image/Black-Clover-Cover-1.jpg"
+        },
+        "munou-na-nana": {
+            "ep": "03",
+            "title": "Munou na Nana",
+            "image": "/image/Munou-na-Nana.jpg"
         }
     },
     "new_manga": [],
@@ -40,12 +66,15 @@
             ],
             "manga_list": [
                 "429",
-                "17274"
+                "17274",
+                "39",
+                "15016",
+                "20882"
             ],
             "anime_list": [
-                "black-clover"
+                "black-clover",
+                "munou-na-nana"
             ]
         }
-    },
-    "new": []
+    }
 }

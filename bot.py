@@ -18,7 +18,7 @@ async def on_ready():
     check_manga.start()
     check_anime.start()
 
-@tasks.loop(seconds=500)
+@tasks.loop(seconds=600)
 async def check_manga():
     with open("data.json") as f:
         data = json.load(f)
@@ -66,12 +66,12 @@ async def notify_manga():
 async def clear_manga():
     with open("data.json") as f:
         data = json.load(f)
-    data["new"] = []
+    data["new_manga"] = []
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
     print("cleared")
 
-@tasks.loop(seconds=60)
+@tasks.loop(seconds=600)
 async def check_anime():
     with open("data.json") as f:
         data = json.load(f)
@@ -105,13 +105,13 @@ async def notify_anime():
                 embed=discord.Embed(title=f"Episode {ep}", url=f"https://4anime.to/{anime}-episode-{ep}", color=0xfaa61a)
                 embed.set_author(name=f"{title}", icon_url="https://cdn.discordapp.com/embed/avatars/3.png")
                 embed.set_image(url=f"https://4anime.to{image}")
-                print(f"https://4anime.to/image{image}")
                 await client.get_channel(data["guilds"][guild]["channels"][0]).send(embed=embed)
 
     print("notified anime")
     await clear_anime()
 
 async def clear_anime():
+    time.sleep(10)
     with open("data.json") as f:
         data = json.load(f)
     data["new_anime"] = []
