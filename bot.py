@@ -27,16 +27,15 @@ async def check_manga():
         headers = {'User-Agent':'Mozilla/5.0'}
         r = requests.get(url, headers)
         soup = BeautifulSoup(r.content, "html.parser")
-        with open("current", "w") as c:
-            newest = soup.find("div", {"data-lang":"1"})
-            ch = newest['data-chapter']
-            if ch != data["manga"][id]["ch"]:
-                data["manga"][id]["ch"] = ch
-                data["manga"][id]["title"] = newest['data-title']
-                data["manga"][id]["url"] = newest['data-id']
-                data["manga"][id]["title"] = soup.find("span", {"class":"mx-1"}).text
-                data["manga"][id]["image"] = soup.find("img", {"class":"rounded"})['src']
-                data["new_manga"].append(id)
+        newest = soup.find("div", {"data-lang":"1"})
+        ch = newest['data-chapter']
+        if ch != data["manga"][id]["ch"]:
+            data["manga"][id]["ch"] = ch
+            data["manga"][id]["title"] = newest['data-title']
+            data["manga"][id]["url"] = newest['data-id']
+            data["manga"][id]["title"] = soup.find("span", {"class":"mx-1"}).text
+            data["manga"][id]["image"] = soup.find("img", {"class":"rounded"})['src']
+            data["new_manga"].append(id)
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
@@ -80,13 +79,12 @@ async def check_anime():
         headers = {'User-Agent':'Mozilla/5.0'}
         r = requests.get(url, headers)
         soup = BeautifulSoup(r.content, "html.parser")
-        with open("current", "w") as c:
-            ep = soup.select("a[href*=episode]")[-1].getText()
-            if ep != data["anime"][id]["ep"]:
-                data["anime"][id]["title"] = soup.find("p", {"class":"single-anime-desktop"}).getText()
-                data["anime"][id]["ep"] = ep
-                data["anime"][id]["image"] = soup.find("div", {"class":"cover"}).find('img').attrs['src']
-                data["new_anime"].append(id)
+        ep = soup.select("a[href*=episode]")[-1].getText()
+        if ep != data["anime"][id]["ep"]:
+            data["anime"][id]["title"] = soup.find("p", {"class":"single-anime-desktop"}).getText()
+            data["anime"][id]["ep"] = ep
+            data["anime"][id]["image"] = soup.find("div", {"class":"cover"}).find('img').attrs['src']
+            data["new_anime"].append(id)
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
