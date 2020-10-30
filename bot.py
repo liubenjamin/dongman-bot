@@ -42,7 +42,6 @@ async def check_manga():
     print("checked manga")
     await notify_manga()
 
-@client.command()
 async def notify_manga():
     with open("data.json") as f:
         data = json.load(f)
@@ -127,5 +126,47 @@ async def sendjson(ctx):
         a += f.read()
         a += "```"
         await ctx.send(a)
+
+@client.command()
+async def add(ctx, type = None, id = None):
+    if type and id:
+        with open("data.json") as f:
+            data = json.load(f)
+        data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
+        if not id in data[type]:
+            await db(data, type, id)
+        with open("data.json", "w") as f:
+            await ctx.send(f"Successfully added {id}")
+            json.dump(data, f, indent=4)
+    else:
+        await ctx.send("Syntax:\n```^add [manga/anime] [id]```")
+
+async def db(data, type, id):
+    if type == "manga":
+        data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
+    if type == "anime":
+        data["anime"][id] = {"ep":"", "title":"", "image":""}
+
+@client.command()
+async def remove(ctx, type = None, id = None):
+    if type and id:
+        with open("data.json") as f:
+            data = json.load(f)
+        try:
+            data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].remove(str(id))
+        except ValueError:
+            await ctx.send(f"{id} not in {type} list")
+        with open("data.json", "w") as f:
+            await ctx.send(f"Successfully removed {id}")
+            json.dump(data, f, indent=4)
+
+@client.command()
+async def list(ctx, type = None):
+    with open("data.json") as f:
+        data = json.load(f)
+    if type:
+        await ctx.send("```\n" + str(data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]) + "\n```")
+    else:
+        await ctx.send("Syntax:\n```^list [manga/anime]```")
 
 client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag.vOlNtGte0zlOapdlkgxWP-JDqV8')

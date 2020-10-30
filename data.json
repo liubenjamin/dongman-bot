@@ -1,10 +1,10 @@
 {
     "manga": {
         "17274": {
-            "title": "Kaguya Wants to be Confessed To",
-            "ch": "205",
+            "title": "Kaguya Wants to Be Confessed To",
+            "ch": "206",
             "chtitle": "Chika Fujiwara Wants to Make Him Laugh",
-            "url": "1075863",
+            "url": "1083248",
             "image": "https://mangadex.org/images/manga/17274.jpg?1593681140"
         },
         "429": {
@@ -16,36 +16,111 @@
         },
         "39": {
             "title": "One Piece",
-            "ch": "992",
+            "ch": "993",
             "chtitle": "",
-            "url": "1069011",
+            "url": "1079892",
             "image": "https://mangadex.org/images/manga/39.jpg?1601473810"
         },
         "15016": {
             "title": "Black Clover",
-            "ch": "268",
+            "ch": "269",
             "chtitle": "",
-            "url": "1068999",
+            "url": "1079889",
             "image": "https://mangadex.org/images/manga/15016.jpg?1601344779"
         },
         "20882": {
             "title": "Dr. Stone",
-            "ch": "170",
+            "ch": "171",
             "chtitle": "",
-            "url": "1069003",
-            "image": "https://mangadex.org/images/manga/20882.jpg?1599253950"
+            "url": "1079890",
+            "image": "https://mangadex.org/images/manga/20882.jpg?1603900895"
+        },
+        "22631": {
+            "title": "Ijiranaide, Nagatoro-san",
+            "ch": "70",
+            "chtitle": "",
+            "url": "1081438",
+            "image": "https://mangadex.org/images/manga/22631.jpg?1603736449"
+        },
+        "21843": {
+            "title": "Karakai Jouzu no (Moto) Takagi-san",
+            "ch": "157",
+            "chtitle": "",
+            "url": "1080261",
+            "image": "https://mangadex.org/images/manga/21843.jpg?1603112639"
+        },
+        "16617": {
+            "title": "Komi-san wa Komyushou Desu.",
+            "ch": "274",
+            "chtitle": "",
+            "url": "1085265",
+            "image": "https://mangadex.org/images/manga/16617.png?1598443083"
+        },
+        "17073": {
+            "title": "Wotaku ni Koi wa Muzukashii",
+            "ch": "63",
+            "chtitle": "",
+            "url": "1079418",
+            "image": "https://mangadex.org/images/manga/17073.png?1602645304"
+        },
+        "13108": {
+            "title": "Karakai Jouzu no Takagi-san",
+            "ch": "135",
+            "chtitle": "",
+            "url": "1074121",
+            "image": "https://mangadex.org/images/manga/13108.jpg?1596227993"
+        },
+        "1880": {
+            "title": "Gekkan Shoujo Nozaki-kun",
+            "ch": "118",
+            "chtitle": "",
+            "url": "1084364",
+            "image": "https://mangadex.org/images/manga/1880.jpg?1597062335"
+        },
+        "31507": {
+            "title": "Umiiro March",
+            "ch": "18",
+            "chtitle": "",
+            "url": "1082457",
+            "image": "https://mangadex.org/images/manga/31507.png?1588591408"
+        },
+        "34944": {
+            "title": "Soredemo Ayumu wa Yosetekuru",
+            "ch": "78",
+            "chtitle": "",
+            "url": "1073832",
+            "image": "https://mangadex.org/images/manga/34944.jpg?1602741864"
+        },
+        "47816": {
+            "title": "Kara no Kioku",
+            "ch": "7",
+            "chtitle": "",
+            "url": "1076792",
+            "image": "https://mangadex.org/images/manga/47816.jpg?1587802803"
+        },
+        "123": {
+            "title": "Beach Stars",
+            "ch": "68",
+            "chtitle": "",
+            "url": "135720",
+            "image": "https://mangadex.org/images/manga/123.jpg?1555686814"
         }
     },
     "anime": {
         "black-clover": {
-            "ep": "148",
+            "ep": "149",
             "title": "Black Clover",
             "image": "/image/Black-Clover-Cover-1.jpg"
         },
         "munou-na-nana": {
-            "ep": "03",
+            "ep": "04",
             "title": "Munou na Nana",
             "image": "/image/Munou-na-Nana.jpg"
+        },
+        "haikyuu-to-the-top-2nd-season": {
+            "ep": "05",
+            "title": "Haikyuu!!: To the Top 2nd Season",
+            "image": "/image/Haikyuu-To-the-Top-2nd-Season.jpg"
         }
     },
     "new_manga": [],
@@ -69,11 +144,22 @@
                 "17274",
                 "39",
                 "15016",
-                "20882"
+                "20882",
+                "22631",
+                "21843",
+                "16617",
+                "17073",
+                "13108",
+                "1880",
+                "31507",
+                "34944",
+                "47816",
+                "123"
             ],
             "anime_list": [
                 "black-clover",
-                "munou-na-nana"
+                "munou-na-nana",
+                "haikyuu-to-the-top-2nd-season"
             ]
         }
     }
