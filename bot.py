@@ -169,4 +169,17 @@ async def list(ctx, type = None):
     else:
         await ctx.send("Syntax:\n```^list [manga/anime]```")
 
+@client.command()
+async def config(ctx, arg = None):
+    with open("data.json") as f:
+        data = json.load(f)
+    if not arg:
+        if str(ctx.message.guild.id) in data["guilds"]:
+            await ctx.send("dongman-bot is configured for this server.")
+        else:
+            data["guilds"][str(ctx.message.guild.id)] = {"channels":[str(ctx.message.channel.id)], "manga_list":[], "anime_list":[]}
+            await ctx.send("Server added to dongman-bot.")
+    with open("data.json", "w") as f:
+        json.dump(data, f, indent=4)
+
 client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag.vOlNtGte0zlOapdlkgxWP-JDqV8')

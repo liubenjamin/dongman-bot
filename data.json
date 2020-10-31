@@ -121,20 +121,16 @@
             "ep": "05",
             "title": "Haikyuu!!: To the Top 2nd Season",
             "image": "/image/Haikyuu-To-the-Top-2nd-Season.jpg"
+        },
+        "higurashi-no-naku-koro-ni-2020": {
+            "ep": "05",
+            "title": "Higurashi no Naku Koro ni (2020)",
+            "image": "/image/Higurashi-no-Naku-Koro-ni-2020.jpg"
         }
     },
     "new_manga": [],
     "new_anime": [],
     "guilds": {
-        "697997529312133220": {
-            "channels": [
-                697997529312133223
-            ],
-            "manga_list": [
-                "429"
-            ],
-            "anime_list": []
-        },
         "311020162696478721": {
             "channels": [
                 746421597014982796
@@ -153,14 +149,23 @@
                 "1880",
                 "31507",
                 "34944",
-                "47816",
-                "123"
+                "47816"
             ],
             "anime_list": [
                 "black-clover",
                 "munou-na-nana",
-                "haikyuu-to-the-top-2nd-season"
+                "haikyuu-to-the-top-2nd-season",
+                "higurashi-no-naku-koro-ni-2020"
             ]
+        },
+        "697997529312133220": {
+            "channels": [
+                "697997529312133223"
+            ],
+            "manga_list": [
+                "429"
+            ],
+            "anime_list": []
         }
     }
 }
