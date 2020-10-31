@@ -120,33 +120,34 @@ async def ok(ctx):
 @client.command()
 async def sendjson(ctx):
     with open('data.json') as f:
-        a = "```\n"
-        a += f.read()
-        a += "```"
-        await ctx.send(a)
+        for line in f.readlines():
+            await ctx.send(line)
 
 @client.command()
 async def add(ctx, type = None, id = None):
     if type and id:
         with open("data.json") as f:
             data = json.load(f)
-        data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
         if not id in data[type]:
-            await db(data, type, id, ctx)
+            await db(ctx, data, type, id)
         with open("data.json", "w") as f:
             json.dump(data, f, indent=4)
     else:
         await ctx.send("Syntax:\n```^add [manga/anime] [id]```")
 
-async def db(data, type, id, ctx):
+async def db(ctx, data, type, id):
     if type == "manga":
-        data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
-        await ctx.send(f"Successfully added {id}")
+        if not 'does not exist' in requests.get(f"http://mangadex.org/title/{id}").text:
+            data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
+            data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
+            await ctx.send(f"Successfully added {id}")
+        else:
+            await ctx.send("Invalid MangaDex ID")
     if type == "anime":
         if requests.get(f"http://4anime.to/title/{id}").status_code < 400:
-            if not id in data["anime"]:
-                data["anime"][id] = {"ep":"", "title":"", "image":""}
-                await ctx.send(f"Successfully added {id}")
+            data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
+            data["anime"][id] = {"ep":"", "title":"", "image":""}
+            await ctx.send(f"Successfully added {id}")
         else:
             await ctx.send("Invalid 4anime ID.")
 
@@ -185,4 +186,4 @@ async def config(ctx, arg = None):
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag.vOlNtGte0zlOapdlkgxWP-JDqV8')
+client.run('')
