@@ -1,8 +1,6 @@
 import asyncio
 import json
 import discord
-import filecmp
-import shutil
 import requests
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
@@ -134,18 +132,23 @@ async def add(ctx, type = None, id = None):
             data = json.load(f)
         data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
         if not id in data[type]:
-            await db(data, type, id)
+            await db(data, type, id, ctx)
         with open("data.json", "w") as f:
-            await ctx.send(f"Successfully added {id}")
             json.dump(data, f, indent=4)
     else:
         await ctx.send("Syntax:\n```^add [manga/anime] [id]```")
 
-async def db(data, type, id):
+async def db(data, type, id, ctx):
     if type == "manga":
         data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
+        await ctx.send(f"Successfully added {id}")
     if type == "anime":
-        data["anime"][id] = {"ep":"", "title":"", "image":""}
+        if requests.get(f"http://4anime.to/title/{id}").status_code < 400:
+            if not id in data["anime"]:
+                data["anime"][id] = {"ep":"", "title":"", "image":""}
+                await ctx.send(f"Successfully added {id}")
+        else:
+            await ctx.send("Invalid 4anime ID.")
 
 @client.command()
 async def remove(ctx, type = None, id = None):
