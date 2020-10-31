@@ -11,8 +11,6 @@ client = commands.Bot(command_prefix = '^')
 async def on_ready():
     print('ready')
     await client.change_presence(activity = discord.Activity(name = "for new chapters", type = discord.ActivityType.watching))
-    client.guild = client.get_guild(697997529312133220)
-    client.channel = client.guild.get_channel(697997529312133223)
     check_manga.start()
     check_anime.start()
 
@@ -114,21 +112,11 @@ async def clear_anime():
     print("cleared anime")
 
 @client.command()
-async def ok(ctx):
-    await ctx.send('OK')
-
-@client.command()
-async def sendjson(ctx):
-    with open('data.json') as f:
-        for line in f.readlines():
-            await ctx.send(line)
-
-@client.command()
 async def add(ctx, type = None, id = None):
     if type and id:
         with open("data.json") as f:
             data = json.load(f)
-        if not id in data[type]:
+        if not id in data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]:
             await db(ctx, data, type, id)
         with open("data.json", "w") as f:
             json.dump(data, f, indent=4)
@@ -139,14 +127,16 @@ async def db(ctx, data, type, id):
     if type == "manga":
         if not 'does not exist' in requests.get(f"http://mangadex.org/title/{id}").text:
             data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
-            data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
+            if not id in data[type]:
+                data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
             await ctx.send(f"Successfully added {id}")
         else:
             await ctx.send("Invalid MangaDex ID")
     if type == "anime":
         if requests.get(f"http://4anime.to/title/{id}").status_code < 400:
             data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
-            data["anime"][id] = {"ep":"", "title":"", "image":""}
+            if not id in data[type]:
+                data["anime"][id] = {"ep":"", "title":"", "image":""}
             await ctx.send(f"Successfully added {id}")
         else:
             await ctx.send("Invalid 4anime ID.")
@@ -186,4 +176,14 @@ async def config(ctx, arg = None):
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-client.run('')
+@client.command()
+async def move(ctx):
+    with open("data.json") as f:
+        data = json.load(f)
+    data["guilds"][str(ctx.message.guild.id)]["channels"].pop(0)
+    data["guilds"][str(ctx.message.guild.id)]["channels"].append(str(ctx.message.channel.id))
+    await ctx.send("Notifications will be sent in this channel.")
+    with open("data.json", "w") as f:
+        json.dump(data, f, indent=4)
+
+client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag.g-TunPMsFnrMXuZz6576Cefdmac')
