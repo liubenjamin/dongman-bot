@@ -16,23 +16,23 @@
         },
         "39": {
             "title": "One Piece",
-            "ch": "993",
+            "ch": "994",
             "chtitle": "",
-            "url": "1079892",
+            "url": "1087537",
             "image": "https://mangadex.org/images/manga/39.jpg?1601473810"
         },
         "15016": {
             "title": "Black Clover",
-            "ch": "269",
+            "ch": "270",
             "chtitle": "",
-            "url": "1079889",
+            "url": "1087533",
             "image": "https://mangadex.org/images/manga/15016.jpg?1601344779"
         },
         "20882": {
             "title": "Dr. Stone",
-            "ch": "171",
+            "ch": "172",
             "chtitle": "",
-            "url": "1079890",
+            "url": "1087534",
             "image": "https://mangadex.org/images/manga/20882.jpg?1603900895"
         },
         "22631": {
@@ -44,9 +44,9 @@
         },
         "21843": {
             "title": "Karakai Jouzu no (Moto) Takagi-san",
-            "ch": "157",
+            "ch": "158",
             "chtitle": "",
-            "url": "1080261",
+            "url": "1090017",
             "image": "https://mangadex.org/images/manga/21843.jpg?1603112639"
         },
         "16617": {
@@ -86,9 +86,9 @@
         },
         "34944": {
             "title": "Soredemo Ayumu wa Yosetekuru",
-            "ch": "78",
+            "ch": "79.1",
             "chtitle": "",
-            "url": "1073832",
+            "url": "1090031",
             "image": "https://mangadex.org/images/manga/34944.jpg?1602741864"
         },
         "47816": {
@@ -101,12 +101,12 @@
     },
     "anime": {
         "black-clover": {
-            "ep": "149",
+            "ep": "150",
             "title": "Black Clover",
             "image": "/image/Black-Clover-Cover-1.jpg"
         },
         "munou-na-nana": {
-            "ep": "04",
+            "ep": "05",
             "title": "Munou na Nana",
             "image": "/image/Munou-na-Nana.jpg"
         },

@@ -52,7 +52,7 @@ async def notify_manga():
                 embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/chapter/{url}", color=0xfaa61a)
                 embed.set_author(name=f"{title}", icon_url="https://cdn.discordapp.com/embed/avatars/3.png")
                 embed.set_image(url=f"{image}")
-                await client.get_channel(data["guilds"][guild]["channels"][0]).send(embed=embed)
+                await client.get_channel(int(data["guilds"][guild]["channels"][0])).send(embed=embed)
 
     print("notified manga")
     await clear_manga()
@@ -98,7 +98,7 @@ async def notify_anime():
                 embed=discord.Embed(title=f"Episode {ep}", url=f"https://4anime.to/{anime}-episode-{ep}", color=0xfaa61a)
                 embed.set_author(name=f"{title}", icon_url="https://cdn.discordapp.com/embed/avatars/3.png")
                 embed.set_image(url=f"https://4anime.to{image}")
-                await client.get_channel(data["guilds"][guild]["channels"][0]).send(embed=embed)
+                await client.get_channel(int(data["guilds"][guild]["channels"][0])).send(embed=embed)
 
     print("notified anime")
     await clear_anime()
@@ -186,4 +186,4 @@ async def move(ctx):
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag.g-TunPMsFnrMXuZz6576Cefdmac')
+client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag._jNselyxwMS1EALuK3rhVWXvnoA')
