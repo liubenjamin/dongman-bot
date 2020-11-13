@@ -2,16 +2,16 @@
     "manga": {
         "17274": {
             "title": "Kaguya Wants to Be Confessed To",
-            "ch": "206",
-            "chtitle": "Chika Fujiwara Wants to Make Him Laugh",
-            "url": "1083248",
-            "image": "https://mangadex.org/images/manga/17274.jpg?1593681140"
+            "ch": "207",
+            "chtitle": "Kei Shirogane Wants to be Welcoming",
+            "url": "1092342",
+            "image": "https://mangadex.org/images/manga/17274.jpg?1604583236"
         },
         "429": {
             "title": "Shingeki no Kyojin",
-            "ch": "133",
+            "ch": "134",
             "chtitle": "Sinner",
-            "url": "1059640",
+            "url": "1100046",
             "image": "https://mangadex.org/images/manga/429.jpg?1596836691"
         },
         "39": {
@@ -23,44 +23,44 @@
         },
         "15016": {
             "title": "Black Clover",
-            "ch": "270",
+            "ch": "271",
             "chtitle": "",
-            "url": "1087533",
+            "url": "1099686",
             "image": "https://mangadex.org/images/manga/15016.jpg?1601344779"
         },
         "20882": {
             "title": "Dr. Stone",
-            "ch": "172",
+            "ch": "173",
             "chtitle": "",
-            "url": "1087534",
+            "url": "1099692",
             "image": "https://mangadex.org/images/manga/20882.jpg?1603900895"
         },
         "22631": {
             "title": "Ijiranaide, Nagatoro-san",
-            "ch": "70",
+            "ch": "71",
             "chtitle": "",
-            "url": "1081438",
+            "url": "1096935",
             "image": "https://mangadex.org/images/manga/22631.jpg?1603736449"
         },
         "21843": {
             "title": "Karakai Jouzu no (Moto) Takagi-san",
-            "ch": "158",
+            "ch": "159",
             "chtitle": "",
-            "url": "1090017",
+            "url": "1098224",
             "image": "https://mangadex.org/images/manga/21843.jpg?1603112639"
         },
         "16617": {
             "title": "Komi-san wa Komyushou Desu.",
-            "ch": "274",
+            "ch": "277",
             "chtitle": "",
-            "url": "1085265",
+            "url": "1098287",
             "image": "https://mangadex.org/images/manga/16617.png?1598443083"
         },
         "17073": {
             "title": "Wotaku ni Koi wa Muzukashii",
-            "ch": "63",
+            "ch": "64",
             "chtitle": "",
-            "url": "1079418",
+            "url": "1092977",
             "image": "https://mangadex.org/images/manga/17073.png?1602645304"
         },
         "13108": {
@@ -86,9 +86,9 @@
         },
         "34944": {
             "title": "Soredemo Ayumu wa Yosetekuru",
-            "ch": "79.1",
+            "ch": "81",
             "chtitle": "",
-            "url": "1090031",
+            "url": "1097088",
             "image": "https://mangadex.org/images/manga/34944.jpg?1602741864"
         },
         "47816": {
@@ -101,22 +101,22 @@
     },
     "anime": {
         "black-clover": {
-            "ep": "150",
+            "ep": "151",
             "title": "Black Clover",
             "image": "/image/Black-Clover-Cover-1.jpg"
         },
         "munou-na-nana": {
-            "ep": "05",
+            "ep": "06",
             "title": "Munou na Nana",
             "image": "/image/Munou-na-Nana.jpg"
         },
         "haikyuu-to-the-top-2nd-season": {
-            "ep": "05",
+            "ep": "06",
             "title": "Haikyuu!!: To the Top 2nd Season",
             "image": "/image/Haikyuu-To-the-Top-2nd-Season.jpg"
         },
         "higurashi-no-naku-koro-ni-2020": {
-            "ep": "05",
+            "ep": "07",
             "title": "Higurashi no Naku Koro ni (2020)",
             "image": "/image/Higurashi-no-Naku-Koro-ni-2020.jpg"
         }

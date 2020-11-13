@@ -27,7 +27,7 @@ async def check_manga():
         ch = newest['data-chapter']
         if ch != data["manga"][id]["ch"]:
             data["manga"][id]["ch"] = ch
-            data["manga"][id]["title"] = newest['data-title']
+            data["manga"][id]["chtitle"] = newest['data-title']
             data["manga"][id]["url"] = newest['data-id']
             data["manga"][id]["title"] = soup.find("span", {"class":"mx-1"}).text
             data["manga"][id]["image"] = soup.find("img", {"class":"rounded"})['src']
@@ -186,4 +186,4 @@ async def move(ctx):
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag._jNselyxwMS1EALuK3rhVWXvnoA')
+client.run('')
