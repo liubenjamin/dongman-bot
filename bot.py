@@ -2,8 +2,10 @@ import asyncio
 import json
 import discord
 import requests
+import feedparser
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 client = commands.Bot(command_prefix = '^')
 
@@ -18,7 +20,10 @@ async def on_ready():
 async def check_manga():
     with open("data.json") as f:
         data = json.load(f)
-    for id in data["manga"]:
+    rss = feedparser.parse("https://mangadex.org/rss/kTE6Af43prFPtdnBaMbvhKD5ySg2GeqC").entries
+    rss_id = {e.mangalink.split("/")[-1] for e in rss}
+    id_list = rss_id & set(data["manga"])
+    for id in id_list:
         url = 'https://mangadex.org/title/' + id
         headers = {'User-Agent':'Mozilla/5.0'}
         r = requests.get(url, headers)
@@ -35,7 +40,7 @@ async def check_manga():
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-    print("checked manga")
+    print("checked manga at", datetime.now().strftime("%H:%M:%S"))
     await notify_manga()
 
 async def notify_manga():
@@ -83,7 +88,7 @@ async def check_anime():
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-    print("checked anime")
+    print("checked anime at", datetime.now().strftime("%H:%M:%S"))
     await notify_anime()
 
 async def notify_anime():
