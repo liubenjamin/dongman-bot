@@ -29,9 +29,8 @@ async def check_manga():
         r = requests.get(url, headers)
         soup = BeautifulSoup(r.content, "html.parser")
         newest = soup.find("div", {"data-lang":"1"})
-        ch = newest['data-chapter']
-        if ch != data["manga"][id]["ch"]:
-            data["manga"][id]["ch"] = ch
+        if newest and newest['data-chapter'] != data["manga"][id]["ch"]:
+            data["manga"][id]["ch"] = newest["data-chapter"]
             data["manga"][id]["chtitle"] = newest['data-title']
             data["manga"][id]["url"] = newest['data-id']
             data["manga"][id]["title"] = soup.find("span", {"class":"mx-1"}).text
