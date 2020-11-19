@@ -154,9 +154,12 @@ async def remove(ctx, type = None, id = None):
             data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].remove(str(id))
         except ValueError:
             await ctx.send(f"{id} not in {type} list")
+            return
         with open("data.json", "w") as f:
             await ctx.send(f"Successfully removed {id}")
             json.dump(data, f, indent=4)
+    else:
+        await ctx.send("Syntax:\n```^remove [manga/anime] [id]```")
 
 @client.command()
 async def list(ctx, type = None):
@@ -190,4 +193,4 @@ async def move(ctx):
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-client.run('')
+client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag.iUlWxeqE3xJlIMh5yrLGUfYYxto')
