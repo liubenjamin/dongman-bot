@@ -3,11 +3,13 @@ import json
 import discord
 import requests
 import feedparser
+import config
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-client = commands.Bot(command_prefix = '^')
+TOKEN = config.TOKEN
+client = commands.Bot(command_prefix = config.PREFIX, case_insensitive = True)
 
 @client.event
 async def on_ready():
@@ -193,4 +195,4 @@ async def move(ctx):
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
-client.run('NzY4NDg2MDYwMDU3MTY1ODQ0.X5BKag.iUlWxeqE3xJlIMh5yrLGUfYYxto')
+client.run(TOKEN)
