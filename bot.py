@@ -18,7 +18,7 @@ async def on_ready():
     check_manga.start()
     check_anime.start()
 
-@tasks.loop(seconds=600)
+@tasks.loop(seconds=180)
 async def check_manga():
     with open("data.json") as f:
         data = json.load(f)
@@ -42,7 +42,8 @@ async def check_manga():
         json.dump(data, f, indent=4)
 
     print("checked manga at", datetime.now().strftime("%H:%M:%S"))
-    await notify_manga()
+    if data["new_manga"]:
+        await notify_manga()
 
 async def notify_manga():
     with open("data.json") as f:
@@ -71,7 +72,7 @@ async def clear_manga():
         json.dump(data, f, indent=4)
     print("cleared manga")
 
-@tasks.loop(seconds=600)
+@tasks.loop(seconds=180)
 async def check_anime():
     with open("data.json") as f:
         data = json.load(f)
@@ -90,7 +91,8 @@ async def check_anime():
         json.dump(data, f, indent=4)
 
     print("checked anime at", datetime.now().strftime("%H:%M:%S"))
-    await notify_anime()
+    if data["new_anime"]:
+        await notify_anime()
 
 async def notify_anime():
     with open("data.json") as f:
