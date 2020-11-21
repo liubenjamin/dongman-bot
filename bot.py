@@ -57,7 +57,7 @@ async def notify_manga():
                 url = data["manga"][manga]["url"]
                 image = data["manga"][manga]["image"]
                 embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/chapter/{url}", color=0xfaa61a)
-                embed.set_author(name=f"{title}", icon_url="https://cdn.discordapp.com/embed/avatars/3.png")
+                embed.set_author(name=f"{title}", icon_url="https://mangadex.org/images/misc/default_brand.png")
                 embed.set_image(url=f"{image}")
                 await client.get_channel(int(data["guilds"][guild]["channels"][0])).send(embed=embed)
 
@@ -104,7 +104,7 @@ async def notify_anime():
                 ep = data["anime"][anime]["ep"]
                 image = data["anime"][anime]["image"]
                 embed=discord.Embed(title=f"Episode {ep}", url=f"https://4anime.to/{anime}-episode-{ep}", color=0xfaa61a)
-                embed.set_author(name=f"{title}", icon_url="https://cdn.discordapp.com/embed/avatars/3.png")
+                embed.set_author(name=f"{title}", icon_url="https://4anime.to/static/logo.png")
                 embed.set_image(url=f"https://4anime.to{image}")
                 await client.get_channel(int(data["guilds"][guild]["channels"][0])).send(embed=embed)
 
