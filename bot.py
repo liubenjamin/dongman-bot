@@ -14,7 +14,7 @@ client = commands.Bot(command_prefix = config.PREFIX, case_insensitive = True)
 @client.event
 async def on_ready():
     print('ready')
-    await client.change_presence(activity = discord.Activity(name = "for new chapters", type = discord.ActivityType.watching))
+    await client.change_presence(activity = discord.Activity(name = "for new episodes and chapters", type = discord.ActivityType.watching))
     check_manga.start()
     check_anime.start()
 
@@ -56,9 +56,10 @@ async def notify_manga():
                 chtitle = data["manga"][manga]["chtitle"]
                 url = data["manga"][manga]["url"]
                 image = data["manga"][manga]["image"]
-                embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/chapter/{url}", color=0xfaa61a)
-                embed.set_author(name=f"{title}", icon_url="https://mangadex.org/images/misc/default_brand.png")
+                embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/chapter/{url}", color=0xf7931e, timestamp = datetime.utcnow())
+                embed.set_author(name=f"{title} 📚", url=f"https://mangadex.org/title/{manga}", icon_url="https://mangadex.org/images/misc/default_brand.png")
                 embed.set_image(url=f"{image}")
+                embed.set_footer(text="🤖 動漫-BOT")
                 await client.get_channel(int(data["guilds"][guild]["channels"][0])).send(embed=embed)
 
     print("notified manga")
@@ -103,9 +104,10 @@ async def notify_anime():
                 title = data["anime"][anime]["title"]
                 ep = data["anime"][anime]["ep"]
                 image = data["anime"][anime]["image"]
-                embed=discord.Embed(title=f"Episode {ep}", url=f"https://4anime.to/{anime}-episode-{ep}", color=0xfaa61a)
-                embed.set_author(name=f"{title}", icon_url="https://4anime.to/static/logo.png")
+                embed=discord.Embed(title=f"Episode {ep}", url=f"https://4anime.to/{anime}-episode-{ep}", color=0xdf1e34, timestamp = datetime.utcnow())
+                embed.set_author(name=f"{title} 📺", url=f"https://4anime.to/{anime}", icon_url="https://4anime.to/static/logo.png")
                 embed.set_image(url=f"https://4anime.to{image}")
+                embed.set_footer(text="🤖 動漫-BOT")
                 await client.get_channel(int(data["guilds"][guild]["channels"][0])).send(embed=embed)
 
     print("notified anime")
