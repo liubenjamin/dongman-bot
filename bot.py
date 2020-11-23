@@ -206,15 +206,17 @@ async def list(ctx, type = None):
         await ctx.send(embed=embed)
 
 @client.command()
-async def config(ctx, arg = None):
+async def start(ctx):
     with open("data.json") as f:
         data = json.load(f)
-    if not arg:
-        if str(ctx.message.guild.id) in data["guilds"]:
-            await ctx.send("dongman-bot is configured for this server.")
-        else:
-            data["guilds"][str(ctx.message.guild.id)] = {"channels":[str(ctx.message.channel.id)], "manga_list":[], "anime_list":[]}
-            await ctx.send("Server added to dongman-bot.")
+    if str(ctx.message.guild.id) in data["guilds"]:
+        d = f"__{ctx.message.guild.name}__ already added."
+        embed = discord.Embed(description=d, color = discord.Colour.blue())
+    else:
+        data["guilds"][str(ctx.message.guild.id)] = {"channels":[str(ctx.message.channel.id)], "manga_list":[], "anime_list":[]}
+        d = f"__{ctx.message.guild.name}__ added to 動漫-BOT"
+        embed = discord.Embed(description=d, color = discord.Colour.blue())
+    await ctx.send(embed=embed)
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
@@ -224,7 +226,9 @@ async def move(ctx):
         data = json.load(f)
     data["guilds"][str(ctx.message.guild.id)]["channels"].pop(0)
     data["guilds"][str(ctx.message.guild.id)]["channels"].append(str(ctx.message.channel.id))
-    await ctx.send("Notifications will be sent in this channel.")
+    d = f"Notifications will be sent in this channel."
+    embed = discord.Embed(description=d, color = discord.Colour.blue())
+    await ctx.send(embed=embed)
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
 
