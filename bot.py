@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 TOKEN = config.TOKEN
+PREFIX = config.PREFIX
 client = commands.Bot(command_prefix = config.PREFIX, case_insensitive = True)
 
 @client.event
@@ -128,28 +129,45 @@ async def add(ctx, type = None, id = None):
             data = json.load(f)
         if not id in data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]:
             await db(ctx, data, type, id)
+        else:
+            await ctx.message.add_reaction('\U0001F610')
+            d = f"Already added {id}."
+            embed = discord.Embed(description=d, color=discord.Colour.light_gray())
+            await ctx.send(embed=embed)
         with open("data.json", "w") as f:
             json.dump(data, f, indent=4)
     else:
-        await ctx.send("Syntax:\n```^add [manga/anime] [id]```")
+        d = f"`{PREFIX}add [manga/anime] [id]`"
+        embed = discord.Embed(title="Syntax:", description=d, color=discord.Colour.light_gray())
+        await ctx.send(embed=embed)
 
 async def db(ctx, data, type, id):
     if type == "manga":
         if not 'does not exist' in requests.get(f"http://mangadex.org/title/{id}").text:
             data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
             if not id in data[type]:
+                await ctx.message.add_reaction('\U00002705')
                 data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
-            await ctx.send(f"Successfully added {id}")
+                d = f"Added {id}."
+                embed = discord.Embed(description=d, color=discord.Colour.green())
+                await ctx.send(embed=embed)
         else:
-            await ctx.send("Invalid MangaDex ID")
+            d = "Invalid MangaDex ID."
+            embed = discord.Embed(description=d, color=discord.Colour.light_gray())
+            await ctx.send(embed=embed)
     if type == "anime":
         if requests.get(f"http://4anime.to/title/{id}").status_code < 400:
             data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
             if not id in data[type]:
+                await ctx.message.add_reaction('\U00002705')
                 data["anime"][id] = {"ep":"", "title":"", "image":""}
-            await ctx.send(f"Successfully added {id}")
+                d = f"Successfully added {id}."
+                embed = discord.Embed(description=d, color=discord.Colour.green())
+                await ctx.send(embed=embed)
         else:
-            await ctx.send("Invalid 4anime ID.")
+            d = "Invalid 4anime ID."
+            embed = discord.Embed(description=d, color=discord.Colour.light_gray())
+            await ctx.send(embed=embed)
 
 @client.command()
 async def remove(ctx, type = None, id = None):
@@ -159,22 +177,33 @@ async def remove(ctx, type = None, id = None):
         try:
             data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].remove(str(id))
         except ValueError:
-            await ctx.send(f"{id} not in {type} list")
+            d = f"{id} is not in {type} list."
+            embed = discord.Embed(description=d, color=discord.Colour.light_gray())
+            await ctx.send(embed=embed)
             return
         with open("data.json", "w") as f:
-            await ctx.send(f"Successfully removed {id}")
+            d = f"Removed {id}"
+            embed = discord.Embed(description=d, color=discord.Colour.red())
+            await ctx.send(embed=embed)
             json.dump(data, f, indent=4)
     else:
-        await ctx.send("Syntax:\n```^remove [manga/anime] [id]```")
+        d = f"`{PREFIX}remove [manga/anime] [id]`"
+        embed = discord.Embed(title="Syntax:", description=d, color=discord.Colour.light_gray())
+        await ctx.send(embed=embed)
 
 @client.command()
 async def list(ctx, type = None):
     with open("data.json") as f:
         data = json.load(f)
     if type:
-        await ctx.send("```\n" + str(data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]) + "\n```")
+        arr = data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]
+        d = ", ".join(arr)
+        embed = discord.Embed(description=d, color = discord.Colour.green())
+        await ctx.send(embed=embed)
     else:
-        await ctx.send("Syntax:\n```^list [manga/anime]```")
+        d = f"`{PREFIX}list [manga/anime]`"
+        embed = discord.Embed(title="Syntax:", description=d, color = discord.Colour.light_gray())
+        await ctx.send(embed=embed)
 
 @client.command()
 async def config(ctx, arg = None):
