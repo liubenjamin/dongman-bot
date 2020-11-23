@@ -10,12 +10,13 @@ from datetime import datetime
 
 TOKEN = config.TOKEN
 PREFIX = config.PREFIX
-client = commands.Bot(command_prefix = config.PREFIX, case_insensitive = True)
+client = commands.Bot(command_prefix=config.PREFIX, case_insensitive=True)
+client.remove_command("help")
 
 @client.event
 async def on_ready():
     print('ready')
-    await client.change_presence(activity = discord.Activity(name = "for new episodes and chapters", type = discord.ActivityType.watching))
+    await client.change_presence(activity=discord.Activity(name="for new episodes and chapters", type=discord.ActivityType.watching))
     check_manga.start()
     check_anime.start()
 
@@ -57,7 +58,7 @@ async def notify_manga():
                 chtitle = data["manga"][manga]["chtitle"]
                 url = data["manga"][manga]["url"]
                 image = data["manga"][manga]["image"]
-                embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/chapter/{url}", color=0xf7931e, timestamp = datetime.utcnow())
+                embed=discord.Embed(title=f"Chapter {ch}: {chtitle}", url=f"https://mangadex.org/chapter/{url}", color=0xf7931e, timestamp=datetime.utcnow())
                 embed.set_author(name=f"{title} 📚", url=f"https://mangadex.org/title/{manga}", icon_url="https://mangadex.org/images/misc/default_brand.png")
                 embed.set_image(url=f"{image}")
                 embed.set_footer(text="🤖 動漫-BOT")
@@ -105,7 +106,7 @@ async def notify_anime():
                 title = data["anime"][anime]["title"]
                 ep = data["anime"][anime]["ep"]
                 image = data["anime"][anime]["image"]
-                embed=discord.Embed(title=f"Episode {ep}", url=f"https://4anime.to/{anime}-episode-{ep}", color=0xdf1e34, timestamp = datetime.utcnow())
+                embed=discord.Embed(title=f"Episode {ep}", url=f"https://4anime.to/{anime}-episode-{ep}", color=0xdf1e34, timestamp=datetime.utcnow())
                 embed.set_author(name=f"{title} 📺", url=f"https://4anime.to/{anime}", icon_url="https://4anime.to/static/logo.png")
                 embed.set_image(url=f"https://4anime.to{image}")
                 embed.set_footer(text="🤖 動漫-BOT")
@@ -123,7 +124,7 @@ async def clear_anime():
     print("cleared anime")
 
 @client.command()
-async def add(ctx, type = None, id = None):
+async def add(ctx, type=None, id=None):
     if type and id:
         with open("data.json") as f:
             data = json.load(f)
@@ -170,7 +171,7 @@ async def db(ctx, data, type, id):
             await ctx.send(embed=embed)
 
 @client.command()
-async def remove(ctx, type = None, id = None):
+async def remove(ctx, type=None, id=None):
     if type and id:
         with open("data.json") as f:
             data = json.load(f)
@@ -192,17 +193,17 @@ async def remove(ctx, type = None, id = None):
         await ctx.send(embed=embed)
 
 @client.command()
-async def list(ctx, type = None):
+async def list(ctx, type=None):
     with open("data.json") as f:
         data = json.load(f)
     if type:
         arr = data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]
         d = ", ".join(arr)
-        embed = discord.Embed(description=d, color = discord.Colour.green())
+        embed = discord.Embed(description=d, color=discord.Colour.green())
         await ctx.send(embed=embed)
     else:
         d = f"`{PREFIX}list [manga/anime]`"
-        embed = discord.Embed(title="Syntax:", description=d, color = discord.Colour.light_gray())
+        embed = discord.Embed(title="Syntax:", description=d, color=discord.Colour.light_gray())
         await ctx.send(embed=embed)
 
 @client.command()
@@ -211,11 +212,11 @@ async def start(ctx):
         data = json.load(f)
     if str(ctx.message.guild.id) in data["guilds"]:
         d = f"__{ctx.message.guild.name}__ already added."
-        embed = discord.Embed(description=d, color = discord.Colour.blue())
+        embed = discord.Embed(description=d, color=discord.Colour.blue())
     else:
         data["guilds"][str(ctx.message.guild.id)] = {"channels":[str(ctx.message.channel.id)], "manga_list":[], "anime_list":[]}
         d = f"__{ctx.message.guild.name}__ added to 動漫-BOT"
-        embed = discord.Embed(description=d, color = discord.Colour.blue())
+        embed = discord.Embed(description=d, color=discord.Colour.blue())
     await ctx.send(embed=embed)
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
@@ -227,9 +228,18 @@ async def move(ctx):
     data["guilds"][str(ctx.message.guild.id)]["channels"].pop(0)
     data["guilds"][str(ctx.message.guild.id)]["channels"].append(str(ctx.message.channel.id))
     d = f"Notifications will be sent in this channel."
-    embed = discord.Embed(description=d, color = discord.Colour.blue())
+    embed = discord.Embed(description=d, color=discord.Colour.blue())
     await ctx.send(embed=embed)
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
+
+@client.command()
+async def help(ctx):
+    embed=discord.Embed(description=f"To get started, type `{PREFIX}start`.\nType each command for its syntax.", color=discord.Colour.blue())
+    embed.add_field(name=f"{PREFIX}add", value="Add series to track", inline=False)
+    embed.add_field(name=f"{PREFIX}remove ", value="Remove series to track", inline=False)
+    embed.add_field(name=f"{PREFIX}list", value="List tracked series", inline=False)
+    embed.add_field(name=f"{PREFIX}move", value="Move notification channel", inline=False)
+    await ctx.send(embed=embed)
 
 client.run(TOKEN)
