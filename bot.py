@@ -196,15 +196,18 @@ async def remove(ctx, type=None, id=None):
 async def list(ctx, type=None):
     with open("data.json") as f:
         data = json.load(f)
-    if type:
-        arr = sorted(data["guilds"][str(ctx.message.guild.id)][f"{type}_list"])
-        d = "\n".join(arr)
-        embed = discord.Embed(description=d, color=discord.Colour.green())
-        await ctx.send(embed=embed)
-    else:
+    type = type.lower()
+    if not type:
         d = f"`{PREFIX}list [manga/anime]`"
         embed = discord.Embed(title="Syntax:", description=d, color=discord.Colour.light_gray())
         await ctx.send(embed=embed)
+    if type == "manga":
+        arr = [f"[{data['manga'][str(id)]['title']}](https://mangadex.org/title/{id}) - Ch. {data['manga'][str(id)]['ch']}" for id in sorted(map(int, data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]))]
+    elif type == "anime":
+        arr = [f"[{data['anime'][id]['title']}](https://4anime.to/anime/{id}) - Ep. {data['anime'][id]['ep']}" for id in sorted(data["guilds"][str(ctx.message.guild.id)][f"{type}_list"])]
+    d = "\n".join(arr)
+    embed = discord.Embed(description=d, color=discord.Colour.green())
+    await ctx.send(embed=embed)
 
 @client.command()
 async def start(ctx):
