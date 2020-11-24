@@ -197,8 +197,8 @@ async def list(ctx, type=None):
     with open("data.json") as f:
         data = json.load(f)
     if type:
-        arr = data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]
-        d = ", ".join(arr)
+        arr = sorted(data["guilds"][str(ctx.message.guild.id)][f"{type}_list"])
+        d = "\n".join(arr)
         embed = discord.Embed(description=d, color=discord.Colour.green())
         await ctx.send(embed=embed)
     else:
