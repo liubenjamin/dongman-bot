@@ -1,2 +1,5 @@
 TOKEN = ''
 PREFIX = '^'
+SESSION = ''
+XSRF = ''
+XAUTH = ''
