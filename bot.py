@@ -230,9 +230,11 @@ async def list(ctx, type=None):
     elif type == "anime":
         arr = sorted([f"[{data['anime'][id]['title']}](https://aniwatch.me/anime/{id}) - [Ep. {data['anime'][id]['ep']}](https://aniwatch.me/anime/{id}/{data['anime'][id]['ep']})" for id in sorted(data["guilds"][str(ctx.message.guild.id)][f"{type}_list"])])
     else: pass
-    d = "\n".join(arr)
-    embed = discord.Embed(description=d, color=discord.Colour.green())
-    await ctx.send(embed=embed)
+    size = 15
+    for i in range((len(arr) + size - 1) // size):
+        d = "\n".join(arr[i * size:(i + 1) * size])
+        embed = discord.Embed(description=d, color=discord.Colour.green())
+        await ctx.send(embed=embed)
 
 @client.command()
 async def start(ctx):
