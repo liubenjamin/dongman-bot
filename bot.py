@@ -18,13 +18,13 @@ async def on_ready():
     print('ready')
     await client.change_presence(activity=discord.Activity(name="for new episodes and chapters", type=discord.ActivityType.watching))
     check_manga.start()
-    check_anime.start()
+    # check_anime.start()
 
 @tasks.loop(seconds=180)
 async def check_manga():
     with open("data.json") as f:
         data = json.load(f)
-    rss = feedparser.parse("https://mangadex.org/rss/kTE6Af43prFPtdnBaMbvhKD5ySg2GeqC").entries
+    rss = feedparser.parse("https://mangadex.org/rss/9AxuFB58x2NvTVPtQ5qnGdHNjWKknUEu").entries
     rss_id = {e.mangalink.split("/")[-1] for e in rss}
     id_list = rss_id & set(data["manga"])
     for id in id_list:
@@ -70,7 +70,8 @@ async def notify_manga():
 async def clear_manga():
     with open("data.json") as f:
         data = json.load(f)
-    data["new_manga"] = []
+    # data["new_manga"] = []
+    data["new_manga"].clear()
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
     print("cleared manga")
@@ -121,7 +122,8 @@ async def notify_anime():
 async def clear_anime():
     with open("data.json") as f:
         data = json.load(f)
-    data["new_anime"] = []
+    # data["new_anime"] = []
+    data["new_anime"].clear()
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
     print("cleared anime")
@@ -148,9 +150,10 @@ async def add(ctx, type=None, id=None):
 async def db(ctx, data, type, id):
     if type == "manga":
         if not 'does not exist' in requests.get(f"http://mangadex.org/title/{id}").text:
-            data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
-            if not id in data[type]:
+            # if not id in data[type]:
+            if not id in data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]:
                 await ctx.message.add_reaction('\U00002705')
+                data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
                 data["manga"][id] = {"title":"", "ch":"", "chtitle":"", "url":"", "image":""}
                 url = 'https://mangadex.org/title/' + id
                 headers = {'User-Agent':'Mozilla/5.0'}
@@ -178,9 +181,10 @@ async def db(ctx, data, type, id):
         jsondata = {"controller":"Anime","action":"getAnime","detail_id":f"{id}"}
         r = session.get(url, cookies=cookies, data=json.dumps(jsondata), headers=headers)
         if json.loads(r.text)["success"]:
-            data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
-            if not id in data[type]:
+            # if not id in data[type]:
+            if not id in data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]:
                 await ctx.message.add_reaction('\U00002705')
+                data["guilds"][str(ctx.message.guild.id)][f"{type}_list"].append(id)
                 anime = json.loads(r.text)["anime"]
                 data["anime"][id] = {"ep":"", "title":"", "image":""}
                 data["anime"][id]["title"] = anime["title"]
@@ -229,7 +233,7 @@ async def list(ctx, type=None):
         arr = sorted([f"[{data['manga'][str(id)]['title']}](https://mangadex.org/title/{id}) - [Ch. {data['manga'][str(id)]['ch']}](https://mangadex.org/chapter/{data['manga'][str(id)]['url']})" for id in sorted(map(int, data["guilds"][str(ctx.message.guild.id)][f"{type}_list"]))])
     elif type == "anime":
         arr = sorted([f"[{data['anime'][id]['title']}](https://aniwatch.me/anime/{id}) - [Ep. {data['anime'][id]['ep']}](https://aniwatch.me/anime/{id}/{data['anime'][id]['ep']})" for id in sorted(data["guilds"][str(ctx.message.guild.id)][f"{type}_list"])])
-    else: pass
+    else: return
     size = 15
     for i in range((len(arr) + size - 1) // size):
         d = "\n".join(arr[i * size:(i + 1) * size])
